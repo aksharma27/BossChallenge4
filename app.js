@@ -16,7 +16,7 @@ const app = require('express')();
 
 dotenv.config({path : './config.env'});
 const DB = process.env.DATABASE;
-const PORT = process.env.PORT;
+// const PORT = process.env.PORT;
 
 app.set('view engine', 'ejs');
 
@@ -111,6 +111,6 @@ app.get("/posts/:postName", (req, res)=>{
 
 
 
-app.listen(PORT, function() {
+app.listen(process.env.PORT || 3000, function() {
   console.log(`Server started on port ${PORT}`);
 });
