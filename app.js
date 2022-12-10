@@ -16,7 +16,7 @@ const app = require('express')();
 
 dotenv.config({path : './config.env'});
 const DB = process.env.DATABASE;
-// const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
 
@@ -24,7 +24,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 //connect to mongodb
-mongoose.connect(DB, {useNewUrlParser: true});
+mongoose.connect(DB, {useNewUrlParser: true}).then(()=>{
+  console.log("Connected to mongodb");
+}).catch((err)=>{
+  console.log("Error connecting to mongodb" +  err);
+});
 //db schema:
 const postSchema = {
   title: String,
@@ -111,6 +115,6 @@ app.get("/posts/:postName", (req, res)=>{
 
 
 
-app.listen(process.env.PORT || 3000, function() {
+app.listen( PORT, function() {
   console.log(`Server started on port ${PORT}`);
 });
